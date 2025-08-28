@@ -31,17 +31,6 @@ void ampm(struct data *d, struct input_struct *is)
 	else puts("PM");
 }
 
-void free_list(struct list_t *list)
-{
-	struct list_t *entry, *next;
-
-	for(entry = list; entry != NULL; entry = next)
-	{
-		next = entry->next;
-		free(entry);
-	}
-}
-
 /* precedence of grade order in seating arrangement */
 void gradeprecedence(struct data *d, struct input_struct *is)
 {
