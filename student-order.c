@@ -40,6 +40,10 @@
 /* tolower()
  */
 
+#include <inttypes.h>
+/* uintmax_t
+ */
+
 #include "fail.c"
 /* includes errno.h
  * fail()
@@ -138,6 +142,7 @@ void loop(struct data *d)
 		else if((!strcmp(s, "editstudent")) || (!strcmp(s, "es"))) editstudent(d, is);
 		else if((!strcmp(s, "removestudent")) || (!strcmp(s, "rs"))) removestudent(d, is);
 		else if((!strcmp(s, "liststudents")) || (!strcmp(s, "ls"))) liststudentsprompt(d, is);
+		else if((!strcmp(s, "gradecounts")) || (!strcmp(s, "gc"))) gradecounts(d->students);
 		/* rule commands */
 		else if(!strcmp(s, "ampm")) ampm(d, is);
 		else if((!strcmp(s, "gradeprecedence")) || (!strcmp(s, "ap"))) gradeprecedence(d, is);

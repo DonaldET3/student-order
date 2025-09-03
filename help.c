@@ -44,7 +44,8 @@ void studenthelp()
 	char *message = "addstudent, as: add a student to the data set\n"
 	"editstudent, es: edit student information\n"
 	"removestudent, rs: remove a student from the data set\n"
-	"liststudents, ls: display a list of students";
+	"liststudents, ls: display a list of students\n"
+	"gradecounts, gc: display the number of students in each grade";
 	puts(message);
 }
 

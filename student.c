@@ -465,3 +465,24 @@ void liststudentsprompt(struct data *d, struct input_struct *is)
 	if(os != stdout) fclose(os);
 }
 
+/* display the number of students in each grade */
+void gradecounts(struct student_t *students)
+{
+	uintmax_t grades[13];
+
+	for(int i = 0; i < 13; ++i) grades[i] = 0;
+
+	for(struct student_t *student = students; student != NULL; student = student->next)
+		if(student->grade < 13) ++grades[student->grade];
+		else {printf("invalid grade found: %u!?\n", student->grade); return;}
+
+	for(int i = 0; i < 13; ++i)
+	{
+		printf("grade %d: %" PRIuMAX, i, grades[i]);
+		if((i & 3) == 3) putchar('\n');
+		else printf("  ");
+	}
+
+	putchar('\n');
+}
+

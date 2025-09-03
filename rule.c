@@ -186,7 +186,7 @@ int print_order(struct data *d, FILE *os)
 				}
 				else if(gender == MALE)
 				{gender = UNKNOWN; break;}
-				else if(gender == UNKNOWN)
+				else
 				{gender = FEMALE; break;}
 			}
 			else if(i == 0) return 0;
