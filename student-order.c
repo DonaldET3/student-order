@@ -1,6 +1,6 @@
 /* Student Order
- * version 1
- * written by Donald_ET3 during August of 2025
+ * version 1.1
+ * written and developed by Donald_ET3 during August and September 2025
  */
 
 #include <stdio.h>

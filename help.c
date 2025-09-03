@@ -1,5 +1,5 @@
 /* help messages
- * written by Donald_ET3 during August of 2025
+ * written and developed by Donald_ET3 during August and September 2025
  */
 
 /* command line help */

@@ -1,5 +1,5 @@
 /* rule functions
- * written by Donald_ET3 during August of 2025
+ * written and developed by Donald_ET3 during August and September 2025
  */
 
 /* set morning or afternoon stop ordering */
