@@ -1,5 +1,5 @@
 Student Ordering tool
-version 1
+version 1.1
 
 A program for ordering students based on several different factors.
 
@@ -26,6 +26,7 @@ addstudent, as: add a student to the data set
 editstudent, es: edit student information
 removestudent, rs: remove a student from the data set
 liststudents, ls: display a list of students
+gradecounts, gc: display the number of students in each grade
 
 rule commands
 ampm: set morning or afternoon stop ordering
