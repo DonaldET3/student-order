@@ -5,8 +5,8 @@
 /* command line help */
 void help()
 {
-	char *message = "Seat Chart\n"
-	"version 1\n\n"
+	char *message = "Student Order\n"
+	"version 1.1\n\n"
 	"A program for arranging seating assignments on a bus\n"
 	"based on several different factors.\n\n"
 	"options\n"
@@ -18,8 +18,8 @@ void help()
 /* core help */
 void corehelp()
 {
-	char *message = "Seat Chart\n"
-	"version 1\n"
+	char *message = "Student Order\n"
+	"version 1.1\n"
 	"core commands\n"
 	"quit, q: quit the program\n"
 	"help, h, ?: help message\n"
