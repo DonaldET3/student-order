@@ -195,6 +195,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 		else if(candidates->next == NULL)
 		{
 			puts("student match");
+			student = candidates->student;
 			free(candidates);
 			return student;
 		}
