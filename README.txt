@@ -3,6 +3,8 @@ version 1.2
 
 A program for ordering students based on several different factors.
 
+To compile the program, just compile student-order.c
+
 command line arguments
 h: help message
 f: load data from a file
@@ -48,3 +50,4 @@ student data includes: name, grade, gender, stop number
 ordering rules are: by grade, gender zoning, and stop number
 ordering rules are assigned a precedence
 student ordering by stop is reversed depending on whether it's a morning or afternoon chart
+
