@@ -259,6 +259,8 @@ void store(struct data *d, struct input_struct *is)
 
 	fn = input_line(is);
 
+	if(*fn == '\n') {puts("file write cancelled"); return;}
+
 	if((of = fopen(fn, "w")) == NULL) {printf("cannot open \"%s\"\n", fn); return;}
 
 	switch(write_file(d, of))

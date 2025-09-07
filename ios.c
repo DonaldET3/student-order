@@ -1,5 +1,5 @@
 /* I/O and string library
- * written by Donald_ET3 during August of 2025
+ * written and developed by Donald_ET3 during August and September of 2025
  */
 
 /* uses fatal error library */
@@ -112,6 +112,7 @@ FILE* get_stream(struct input_struct *is)
 		{
 			printf("enter file name\n:");
 			s = input_line(is);
+			if(*s == '\n') {puts("file write cancelled"); return NULL;}
 			if((os = fopen(s, "w")) == NULL)
 			{printf("cannot open \"%s\"\n", s); return NULL;}
 			return os;
