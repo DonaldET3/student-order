@@ -3,14 +3,14 @@
  */
 
 /* set morning or afternoon stop ordering */
-void ampm(struct data *d, struct input_struct *is)
+void ampm(bool *am, struct input_struct *is)
 {
 	char *s;
 
 	while(true)
 	{
 		printf("stop order currently set to: ");
-		if(d->am) puts("AM");
+		if(*am) puts("AM");
 		else puts("PM");
 		printf("Is this an AM route or PM route? [am/pm] (leave empty to cancel)\n:");
 		s = input_line(is);
@@ -20,19 +20,19 @@ void ampm(struct data *d, struct input_struct *is)
 		for(size_t i = 0; s[i] != '\0'; i++) s[i] = tolower(s[i]);
 
 		if((!strcmp(s, "am")) || (!strcmp(s, "a")))
-			{d->am = true; break;}
+			{*am = true; break;}
 		if((!strcmp(s, "pm")) || (!strcmp(s, "p")))
-			{d->am = false; break;}
+			{*am = false; break;}
 		puts("not a valid entry");
 	}
 
 	printf("stop order is now ");
-	if(d->am) puts("AM");
+	if(*am) puts("AM");
 	else puts("PM");
 }
 
 /* precedence of grade order in seating arrangement */
-void gradeprecedence(struct data *d, struct input_struct *is)
+void gradeprecedence(enum rule_t *rules, struct input_struct *is)
 {
 	char *s;
 	unsigned x;
@@ -45,14 +45,14 @@ void gradeprecedence(struct data *d, struct input_struct *is)
 		if(sscanf(s, "%u", &x) != 1)
 		{puts("not a valid number"); continue;}
 		if(x > 3) {puts("Number is too large. There are only 3 rules."); continue;}
-		for(int i = 0; i < 3; ++i) if(d->rules[i] == GRADE) d->rules[i] = NONE;
-		if(x) d->rules[x - 1] = GRADE;
+		for(int i = 0; i < 3; ++i) if(rules[i] == GRADE) rules[i] = NONE;
+		if(x) rules[x - 1] = GRADE;
 		break;
 	}
 }
 
 /* precedence of gender in seating arrangement */
-void genderprecedence(struct data *d, struct input_struct *is)
+void genderprecedence(enum rule_t *rules, struct input_struct *is)
 {
 	char *s;
 	unsigned x;
@@ -65,14 +65,14 @@ void genderprecedence(struct data *d, struct input_struct *is)
 		if(sscanf(s, "%u", &x) != 1)
 		{puts("not a valid number"); continue;}
 		if(x > 3) {puts("Number is too large. There are only 3 rules."); continue;}
-		for(int i = 0; i < 3; ++i) if(d->rules[i] == GENDER) d->rules[i] = NONE;
-		if(x) d->rules[x - 1] = GENDER;
+		for(int i = 0; i < 3; ++i) if(rules[i] == GENDER) rules[i] = NONE;
+		if(x) rules[x - 1] = GENDER;
 		break;
 	}
 }
 
 /* precedence of stop order in seating arrangement */
-void stopprecedence(struct data *d, struct input_struct *is)
+void stopprecedence(enum rule_t *rules, struct input_struct *is)
 {
 	char *s;
 	unsigned x;
@@ -85,20 +85,20 @@ void stopprecedence(struct data *d, struct input_struct *is)
 		if(sscanf(s, "%u", &x) != 1)
 		{puts("not a valid number"); continue;}
 		if(x > 3) {puts("Number is too large. There are only 3 rules."); continue;}
-		for(int i = 0; i < 3; ++i) if(d->rules[i] == STOP) d->rules[i] = NONE;
-		if(x) d->rules[x - 1] = STOP;
+		for(int i = 0; i < 3; ++i) if(rules[i] == STOP) rules[i] = NONE;
+		if(x) rules[x - 1] = STOP;
 		break;
 	}
 }
 
 /* display student ordering rule configuration */
-void viewruleorder(struct data *d, struct input_struct *is)
+void viewruleorder(enum rule_t *rules, struct input_struct *is)
 {
 	for(int i = 0; i < 3; ++i)
-		if(d->rules[i] != NONE)
+		if(rules[i] != NONE)
 		{
 			printf("%d: ", i);
-			switch(d->rules[i])
+			switch(rules[i])
 			{
 				case GRADE: puts("grade"); break;
 				case GENDER: puts("gender"); break;
@@ -139,10 +139,7 @@ int print_order(struct data *d, FILE *os)
 			if((student->grade == grade) || (!gradep))
 				if((student->stop == stop) || (!stopp))
 					if((student->gender == gender) || (!genderp))
-					{
-						if(print_student(student, os)) return -1;
-						if(putc('\n', os) == EOF) return -1;
-					}
+						if(print_studentlf(student, os)) return -1;
 
 		for(int i = 2; i >= 0; --i)
 		{

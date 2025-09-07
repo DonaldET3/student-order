@@ -46,24 +46,41 @@ struct student_t* search_students(struct student_t *students, struct student_t *
 }
 
 /* output student information to a stream */
-int print_student(struct student_t *student, FILE *os)
+void print_student(struct student_t *student)
 {
-	if(fprintf(os, "first name: %s\n", student->firstname) < 0) return -1;
+	printf("first name: %s\n", student->firstname);
 
-	if(student->lastname != NULL)
-		if(fprintf(os, "last name: %s\n", student->lastname) < 0) return -1;
+	if(student->lastname != NULL) printf("last name: %s\n", student->lastname);
 
-	if(fprintf(os, "grade: %u  ", student->grade) < 0) return -1;
+	printf("grade: %u  ", student->grade);
 
-	if(student->stop)
-		if(fprintf(os, "stop: %u  ", student->stop) < 0) return -1;
+	if(student->stop) printf("stop: %u  ", student->stop);
 
 	if(student->gender != UNKNOWN)
 	{
-		if(fprintf(os, "gender: ") < 0) return -1;
-		if(student->gender == MALE) if(fprintf(os, "male") < 0) return -1;
-		if(student->gender == FEMALE) if(fprintf(os, "female") < 0) return -1;
+		printf("gender: ");
+		if(student->gender == MALE) printf("male");
+		if(student->gender == FEMALE) printf("female");
 	}
+
+	putchar('\n');
+}
+
+/* output student information in "list format" to a stream */
+int print_studentlf(struct student_t *student, FILE *os)
+{
+	if(fputs(student->firstname, os) == EOF) return -1;
+
+	if(student->lastname != NULL)
+		if(fprintf(os, " %s", student->lastname) < 0) return -1;
+
+	if(fprintf(os, ", grade %u", student->grade) < 0) return -1;
+
+	if(student->stop)
+		if(fprintf(os, ", stop %u", student->stop) < 0) return -1;
+
+	if(student->gender == MALE) if(fprintf(os, ", male") < 0) return -1;
+	if(student->gender == FEMALE) if(fprintf(os, ", female") < 0) return -1;
 
 	if(putc('\n', os) == EOF) return -1;
 
@@ -92,7 +109,7 @@ void free_student(struct student_t *student)
 }
 
 /* add a student to the data set */
-void addstudent(struct data *d, struct input_struct *is)
+void addstudent(struct student_t **students, struct input_struct *is)
 {
 	char *s;
 	struct student_t *student;
@@ -154,7 +171,7 @@ void addstudent(struct data *d, struct input_struct *is)
 		puts("not a valid entry");
 	}
 
-	if(search_students(d->students, student) != NULL)
+	if(search_students(*students, student) != NULL)
 	{
 		puts("This student is essentially identical to an existing student.\n"
 			"student addition cancelled");
@@ -162,11 +179,11 @@ void addstudent(struct data *d, struct input_struct *is)
 		return;
 	}
 
-	student->next = d->students;
-	d->students = student;
+	student->next = *students;
+	*students = student;
 
 	puts("new student added");
-	print_student(student, stdout);
+	print_student(student);
 }
 
 struct student_t* find_student(struct student_t *list, struct input_struct *is)
@@ -217,6 +234,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 					c = (*spot)->next;
 					free(*spot);
 					*spot = c;
+					if(c == NULL) break;
 				}
 			if(candidates->next == NULL)
 			{
@@ -248,6 +266,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 						c = (*spot)->next;
 						free(*spot);
 						*spot = c;
+						if(c == NULL) break;
 					}
 				if(candidates->next == NULL)
 				{
@@ -280,6 +299,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 						c = (*spot)->next;
 						free(*spot);
 						*spot = c;
+						if(c == NULL) break;
 					}
 				if(candidates->next == NULL)
 				{
@@ -318,6 +338,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 					c = (*spot)->next;
 					free(*spot);
 					*spot = c;
+					if(c == NULL) break;
 				}
 			student = candidates->student;
 			if(candidates->next == NULL) puts("student match");
@@ -335,15 +356,15 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 }
 
 /* edit student information */
-void editstudent(struct data *d, struct input_struct *is)
+void editstudent(struct student_t *students, struct input_struct *is)
 {
 	unsigned x;
 	char *s;
 	struct student_t *student, *edit;
 
-	if((student = find_student(d->students, is)) == NULL) return;
+	if((student = find_student(students, is)) == NULL) return;
 	puts("editing student");
-	print_student(student, stdout);
+	print_student(student);
 	edit = copy_student(new_student(), student);
 
 	printf("current first name: %s\n", edit->firstname);
@@ -405,33 +426,32 @@ void editstudent(struct data *d, struct input_struct *is)
 		puts("not a valid entry");
 	}
 
-	if(search_students(d->students, edit) != NULL)
+	if(search_students(students, edit) != NULL)
 		puts("This student is essentially identical to an existing student.\n"
 			"student edit cancelled");
 	else
 	{
 		copy_student(student, edit);
 		puts("student edited");
-		print_student(student, stdout);
+		print_student(student);
 	}
 
 	free_student(edit);
 }
 
 /* remove a student from the data set */
-void removestudent(struct data *d, struct input_struct *is)
+void removestudent(struct student_t **students, struct input_struct *is)
 {
-	char *s;
 	struct student_t *match, **spot;
 
-	if((match = find_student(d->students, is)) == NULL) return;
-	print_student(match, stdout);
+	if((match = find_student(*students, is)) == NULL) return;
+	print_student(match);
 
 	printf("Are you sure you want to remove this student?");
 
 	if(yes_or_other(is))
 	{
-		for(spot = &d->students; *spot != match; spot = &(*spot)->next);
+		for(spot = students; *spot != match; spot = &(*spot)->next);
 		*spot = match->next;
 		free_student(match);
 		puts("student removed");
@@ -439,43 +459,51 @@ void removestudent(struct data *d, struct input_struct *is)
 	else puts("student retained");
 }
 
-int liststudents(struct data *d, FILE *os)
+int liststudents(struct student_t *students, FILE *os)
 {
 	if(fputs("student list\n", os) == EOF) return -1;
 
-	for(struct student_t *student = d->students;
+	for(struct student_t *student = students;
 		student != NULL; student = student->next)
-	{
-		if(print_student(student, os)) return -1;
-
-		if(student->next != NULL) if(putc('\n', os) == EOF) return -1;
-	}
+		if(print_studentlf(student, os)) return -1;
 
 	return 0;
 }
 
 /* display a list of students */
-void liststudentsprompt(struct data *d, struct input_struct *is)
+void liststudentsprompt(struct student_t *students, struct input_struct *is)
 {
 	FILE *os;
 
 	if((os = get_stream(is)) == NULL) return;
 
-	if(liststudents(d, os)) puts("could not write data");
+	if(liststudents(students, os)) puts("could not write data");
 
 	if(os != stdout) fclose(os);
+}
+
+/* find a student to verify information */
+void checkstudent(struct student_t *students, struct input_struct *is)
+{
+	struct student_t *match;
+
+	if((match = find_student(students, is)) == NULL) return;
+	print_student(match);
 }
 
 /* display the number of students in each grade */
 void gradecounts(struct student_t *students)
 {
-	uintmax_t grades[13];
+	uintmax_t grades[13], total = 0;
 
 	for(int i = 0; i < 13; ++i) grades[i] = 0;
 
 	for(struct student_t *student = students; student != NULL; student = student->next)
+	{
 		if(student->grade < 13) ++grades[student->grade];
 		else {printf("invalid grade found: %u!?\n", student->grade); return;}
+		++total;
+	}
 
 	for(int i = 0; i < 13; ++i)
 	{
@@ -484,6 +512,6 @@ void gradecounts(struct student_t *students)
 		else printf("  ");
 	}
 
-	putchar('\n');
+	printf("total: %" PRIuMAX "\n", total);
 }
 

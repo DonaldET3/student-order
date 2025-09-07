@@ -1,5 +1,5 @@
 /* Student Order
- * version 1.1
+ * version 1.2
  * written and developed by Donald_ET3 during August and September 2025
  */
 
@@ -84,6 +84,9 @@ struct data {
 /* student functions */
 #include "student.c"
 
+/* stop functions */
+#include "stop.c"
+
 /* rule functions */
 #include "rule.c"
 
@@ -130,6 +133,7 @@ void loop(struct data *d)
 			(!strcmp(s, "?"))) corehelp();
 		else if((!strcmp(s, "filehelp")) || (!strcmp(s, "fh"))) filehelp();
 		else if((!strcmp(s, "studenthelp")) || (!strcmp(s, "sh"))) studenthelp();
+		else if((!strcmp(s, "stophelp")) || (!strcmp(s, "stph"))) stophelp();
 		else if((!strcmp(s, "rulehelp")) || (!strcmp(s, "rh"))) rulehelp();
 		/* file commands */
 		else if((!strcmp(s, "store")) || (!strcmp(s, "save")) ||
@@ -138,17 +142,33 @@ void loop(struct data *d)
 		else if((!strcmp(s, "clear")) || (!strcmp(s, "reset")) ||
 			(!strcmp(s, "new"))) clearprompt(d, is);
 		/* student commands */
-		else if((!strcmp(s, "addstudent")) || (!strcmp(s, "as"))) addstudent(d, is);
-		else if((!strcmp(s, "editstudent")) || (!strcmp(s, "es"))) editstudent(d, is);
-		else if((!strcmp(s, "removestudent")) || (!strcmp(s, "rs"))) removestudent(d, is);
-		else if((!strcmp(s, "liststudents")) || (!strcmp(s, "ls"))) liststudentsprompt(d, is);
-		else if((!strcmp(s, "gradecounts")) || (!strcmp(s, "gc"))) gradecounts(d->students);
+		else if((!strcmp(s, "addstudent")) || (!strcmp(s, "as")))
+			addstudent(&d->students, is);
+		else if((!strcmp(s, "editstudent")) || (!strcmp(s, "es")))
+			editstudent(d->students, is);
+		else if((!strcmp(s, "removestudent")) || (!strcmp(s, "rs")))
+			removestudent(&d->students, is);
+		else if((!strcmp(s, "liststudents")) || (!strcmp(s, "ls")))
+			liststudentsprompt(d->students, is);
+		else if((!strcmp(s, "checkstudent")) || (!strcmp(s, "cs")))
+			checkstudent(d->students, is);
+		else if((!strcmp(s, "gradecounts")) || (!strcmp(s, "gc")))
+			gradecounts(d->students);
+		/* stop commands */
+		else if((!strcmp(s, "insertstop")) || (!strcmp(s, "istp")))
+			insertstop(d->students, is);
+		else if((!strcmp(s, "removestop")) || (!strcmp(s, "rstp")))
+			removestop(d->students, is);
 		/* rule commands */
-		else if(!strcmp(s, "ampm")) ampm(d, is);
-		else if((!strcmp(s, "gradeprecedence")) || (!strcmp(s, "ap"))) gradeprecedence(d, is);
-		else if((!strcmp(s, "genderprecedence")) || (!strcmp(s, "gp"))) genderprecedence(d, is);
-		else if((!strcmp(s, "stopprecedence")) || (!strcmp(s, "sp"))) stopprecedence(d, is);
-		else if((!strcmp(s, "viewruleorder")) || (!strcmp(s, "vro"))) viewruleorder(d, is);
+		else if(!strcmp(s, "ampm")) ampm(&d->am, is);
+		else if((!strcmp(s, "gradeprecedence")) || (!strcmp(s, "ap")))
+			gradeprecedence(d->rules, is);
+		else if((!strcmp(s, "genderprecedence")) || (!strcmp(s, "gp")))
+			genderprecedence(d->rules, is);
+		else if((!strcmp(s, "stopprecedence")) || (!strcmp(s, "sp")))
+			stopprecedence(d->rules, is);
+		else if((!strcmp(s, "viewruleorder")) || (!strcmp(s, "vro")))
+			viewruleorder(d->rules, is);
 		else if((!strcmp(s, "vieworder")) || (!strcmp(s, "vo"))) vieworder(d, is);
 		/* unrecognized command */
 		else puts("unrecognized command");
