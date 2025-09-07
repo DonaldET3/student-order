@@ -1,5 +1,5 @@
 Student Ordering tool
-version 1.1
+version 1.2
 
 A program for ordering students based on several different factors.
 
@@ -14,6 +14,7 @@ quit, q: quit the program
 help, h, ?: help message
 filehelp, fh: list file commands
 studenthelp, sh: list student commands
+stophelp, stph: list stop commands
 rulehelp, rh: list ordering rule commands
 
 file commands
@@ -26,7 +27,12 @@ addstudent, as: add a student to the data set
 editstudent, es: edit student information
 removestudent, rs: remove a student from the data set
 liststudents, ls: display a list of students
+checkstudent, cs: find a student to verify information
 gradecounts, gc: display the number of students in each grade
+
+stop commands
+insertstop, istp: increment later stop numbers to insert a new stop
+removestop, rstp: decrement later stop numbers to remove a stop
 
 rule commands
 ampm: set morning or afternoon stop ordering
