@@ -156,7 +156,7 @@ int read_file(struct data *d, struct input_struct *is)
 		/* section headers */
 		else if(!strcmp(l, "student")) error |= read_student_section(d, is);
 		else if(!strcmp(l, "rule")) error |= read_rule_section(d, is);
-		/* read through empty lines */
+		/* skip unrecognized section */
 		else while(*l != '\n') if((l = input_line(is)) == NULL) return 1;
 	}
 
