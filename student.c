@@ -228,14 +228,16 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 			if(!strcmp(s, c->student->lastname)) break;
 		if(c != NULL)
 		{
-			for(spot = &candidates; *spot != NULL; spot = &(*spot)->next)
+			spot = &candidates;
+			while(*spot != NULL)
 				if(strcmp(s, (*spot)->student->lastname))
 				{
 					c = (*spot)->next;
 					free(*spot);
 					*spot = c;
-					if(c == NULL) break;
 				}
+				else spot = &(*spot)->next;
+
 			if(candidates->next == NULL)
 			{
 				puts("student match");
@@ -260,14 +262,16 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 				if(c->student->grade == x) break;
 			if(c != NULL)
 			{
-				for(spot = &candidates; *spot != NULL; spot = &(*spot)->next)
+				spot = &candidates;
+				while(*spot != NULL)
 					if((*spot)->student->grade != x)
 					{
 						c = (*spot)->next;
 						free(*spot);
 						*spot = c;
-						if(c == NULL) break;
 					}
+					else spot = &(*spot)->next;
+
 				if(candidates->next == NULL)
 				{
 					puts("student match");
@@ -293,14 +297,16 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 				if(c->student->stop == x) break;
 			if(c != NULL)
 			{
-				for(spot = &candidates; *spot != NULL; spot = &(*spot)->next)
+				spot = &candidates;
+				while(*spot != NULL)
 					if((*spot)->student->stop != x)
 					{
 						c = (*spot)->next;
 						free(*spot);
 						*spot = c;
-						if(c == NULL) break;
 					}
+					else spot = &(*spot)->next;
+
 				if(candidates->next == NULL)
 				{
 					puts("student match");
@@ -332,14 +338,16 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 			if(c->student->gender == g) break;
 		if(c != NULL)
 		{
-			for(spot = &candidates; *spot != NULL; spot = &(*spot)->next)
+			spot = &candidates;
+			while(*spot != NULL)
 				if((*spot)->student->gender != g)
 				{
 					c = (*spot)->next;
 					free(*spot);
 					*spot = c;
-					if(c == NULL) break;
 				}
+				else spot = &(*spot)->next;
+
 			student = candidates->student;
 			if(candidates->next == NULL) puts("student match");
 			else puts("multiple students matched (bug); picking the first one");
