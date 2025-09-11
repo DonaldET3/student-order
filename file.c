@@ -97,8 +97,8 @@ int read_student_section(struct data *d, struct input_struct *is)
 		else if(!strcmp(l, "gender"))
 		{
 			if((l = strtok(NULL, " ")) == NULL) {error = 1; continue;}
-			if(!strcmp(l, "male")) student->gender = MALE;
-			else if(!strcmp(l, "female")) student->gender = FEMALE;
+			if(!strcmp(l, "boy")) student->gender = BOY;
+			else if(!strcmp(l, "girl")) student->gender = GIRL;
 			else error = 1;
 		}
 	}
@@ -143,7 +143,7 @@ int read_file(struct data *d, struct input_struct *is)
 	if((l = input_line(is)) == NULL) return -1;
 
 	/* check file header */
-	if(strcmp(l, "Student Order v1")) {puts("wrong file type"); return -1;}
+	if(strcmp(l, "Student Order v1.1")) {puts("wrong file type"); return -1;}
 
 	while(true)
 	{
@@ -204,7 +204,7 @@ void loadprompt(struct data *d, struct input_struct *is)
 int write_file(struct data *d, FILE *of)
 {
 	/* write file header */
-	if(fputs("Student Order v1\n\n", of) == EOF) return -1;
+	if(fputs("Student Order v1.1\n\n", of) == EOF) return -1;
 
 	/* write student list */
 	if(fputs("student\n", of) == EOF) return -2;
@@ -221,8 +221,8 @@ int write_file(struct data *d, FILE *of)
 		switch(student->gender)
 		{
 			case UNKNOWN: break;
-			case MALE: if(fputs("gender male\n", of) == EOF) return -2; break;
-			case FEMALE: if(fputs("gender female\n", of) == EOF) return -2; break;
+			case BOY: if(fputs("gender boy\n", of) == EOF) return -2; break;
+			case GIRL: if(fputs("gender girl\n", of) == EOF) return -2; break;
 		}
 
 		if(student->next != NULL)

@@ -1,5 +1,5 @@
 /* Student Order
- * version 1.2
+ * version 1.3
  * written and developed by Donald_ET3 during August and September 2025
  */
 
@@ -58,7 +58,7 @@
  */
 
 /* gender type */
-enum gender_t {UNKNOWN, MALE, FEMALE};
+enum gender_t {UNKNOWN, BOY, GIRL};
 
 /* rule type */
 enum rule_t {NONE, GRADE, GENDER, STOP};

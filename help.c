@@ -6,7 +6,7 @@
 void help()
 {
 	char *message = "Student Order\n"
-	"version 1.2\n\n"
+	"version 1.3\n\n"
 	"A program for arranging seating assignments on a bus\n"
 	"based on several different factors.\n\n"
 	"options\n"
@@ -19,7 +19,7 @@ void help()
 void corehelp()
 {
 	char *message = "Student Order\n"
-	"version 1.2\n"
+	"version 1.3\n"
 	"core commands\n"
 	"quit, q: quit the program\n"
 	"help, h, ?: help message\n"

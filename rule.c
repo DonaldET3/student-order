@@ -114,7 +114,7 @@ int print_order(struct data *d, FILE *os)
 	struct student_t *student;
 	unsigned grade = 0, stop = 0, laststop = 0;
 	unsigned gradep = 0, stopp = 0, genderp = 0;
-	enum gender_t gender = MALE;
+	enum gender_t gender = BOY;
 	enum rule_t rule;
 
 	for(unsigned i = 0; i < 3; ++i)
@@ -176,15 +176,15 @@ int print_order(struct data *d, FILE *os)
 			}
 			else if(rule == GENDER)
 			{
-				if(gender == FEMALE)
+				if(gender == GIRL)
 				{
 					if(i == 0) return 0;
-					gender = MALE;
+					gender = BOY;
 				}
-				else if(gender == MALE)
+				else if(gender == BOY)
 				{gender = UNKNOWN; break;}
 				else
-				{gender = FEMALE; break;}
+				{gender = GIRL; break;}
 			}
 			else if(i == 0) return 0;
 		}

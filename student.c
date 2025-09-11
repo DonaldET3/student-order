@@ -59,8 +59,8 @@ void print_student(struct student_t *student)
 	if(student->gender != UNKNOWN)
 	{
 		printf("gender: ");
-		if(student->gender == MALE) printf("male");
-		if(student->gender == FEMALE) printf("female");
+		if(student->gender == BOY) printf("boy");
+		if(student->gender == GIRL) printf("girl");
 	}
 
 	putchar('\n');
@@ -79,8 +79,8 @@ int print_studentlf(struct student_t *student, FILE *os)
 	if(student->stop)
 		if(fprintf(os, ", stop %u", student->stop) < 0) return -1;
 
-	if(student->gender == MALE) if(fprintf(os, ", male") < 0) return -1;
-	if(student->gender == FEMALE) if(fprintf(os, ", female") < 0) return -1;
+	if(student->gender == BOY) if(fprintf(os, ", boy") < 0) return -1;
+	if(student->gender == GIRL) if(fprintf(os, ", girl") < 0) return -1;
 
 	if(putc('\n', os) == EOF) return -1;
 
@@ -157,17 +157,17 @@ void addstudent(struct student_t **students, struct input_struct *is)
 
 	while(true)
 	{
-		printf("enter student gender [m/f] (leave empty to skip)\n:");
+		printf("enter student gender [b/g] (leave empty to skip)\n:");
 		s = input_line(is);
 		if(*s == '\n') break;
 
 		/* convert string to lowercase */
 		for(size_t i = 0; s[i] != '\0'; i++) s[i] = tolower(s[i]);
 
-		if((!strcmp(s, "male")) || (!strcmp(s, "m")))
-			{student->gender = MALE; break;}
-		if((!strcmp(s, "female")) || (!strcmp(s, "f")))
-			{student->gender = FEMALE; break;}
+		if((!strcmp(s, "boy")) || (!strcmp(s, "b")))
+			{student->gender = BOY; break;}
+		if((!strcmp(s, "girl")) || (!strcmp(s, "g")))
+			{student->gender = GIRL; break;}
 		puts("not a valid entry");
 	}
 
@@ -322,7 +322,7 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 
 	while(true)
 	{
-		printf("enter student gender [unknown/male/female] (leave empty to cancel)\n:");
+		printf("enter student gender [unknown/boy/girl] (leave empty to cancel)\n:");
 		s = input_line(is);
 		if(*s == '\n') return NULL;
 
@@ -330,8 +330,8 @@ struct student_t* find_student(struct student_t *list, struct input_struct *is)
 		for(size_t i = 0; s[i] != '\0'; i++) s[i] = tolower(s[i]);
 
 		if((!strcmp(s, "unknown")) || (!strcmp(s, "u"))) g = UNKNOWN;
-		else if((!strcmp(s, "male")) || (!strcmp(s, "m"))) g = MALE;
-		else if((!strcmp(s, "female")) || (!strcmp(s, "f"))) g = FEMALE;
+		else if((!strcmp(s, "boy")) || (!strcmp(s, "b"))) g = BOY;
+		else if((!strcmp(s, "girl")) || (!strcmp(s, "g"))) g = GIRL;
 		else {puts("not a valid entry"); continue;}
 
 		for(c = candidates; c != NULL; c = c->next)
@@ -415,10 +415,10 @@ void editstudent(struct student_t *students, struct input_struct *is)
 		switch(edit->gender)
 		{
 			case UNKNOWN: puts("unknown"); break;
-			case MALE: puts("male"); break;
-			case FEMALE: puts("female");
+			case BOY: puts("boy"); break;
+			case GIRL: puts("girl");
 		}
-		printf("enter student gender [unknown/male/female] (leave empty to keep)\n:");
+		printf("enter student gender [unknown/boy/girl] (leave empty to keep)\n:");
 		s = input_line(is);
 		if(*s == '\n') break;
 
@@ -427,10 +427,10 @@ void editstudent(struct student_t *students, struct input_struct *is)
 
 		if((!strcmp(s, "unknown")) || (!strcmp(s, "u")))
 			{edit->gender = UNKNOWN; break;}
-		if((!strcmp(s, "male")) || (!strcmp(s, "m")))
-			{edit->gender = MALE; break;}
-		if((!strcmp(s, "female")) || (!strcmp(s, "f")))
-			{edit->gender = FEMALE; break;}
+		if((!strcmp(s, "boy")) || (!strcmp(s, "b")))
+			{edit->gender = BOY; break;}
+		if((!strcmp(s, "girl")) || (!strcmp(s, "g")))
+			{edit->gender = GIRL; break;}
 		puts("not a valid entry");
 	}
 
