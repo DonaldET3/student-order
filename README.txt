@@ -1,5 +1,5 @@
 Student Ordering tool
-version 1.2
+version 1.3
 
 A program for ordering students based on several different factors.
 
