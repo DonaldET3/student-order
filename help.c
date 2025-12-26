@@ -1,0 +1,74 @@
+/* help messages
+ * written and developed by Donald_ET3 during August and September 2025
+ */
+
+/* command line help */
+void help()
+{
+	char *message = "Student Order\n"
+	"version 1.3\n\n"
+	"A program for arranging seating assignments on a bus\n"
+	"based on several different factors.\n\n"
+	"options\n"
+	"h: help message\n"
+	"f: load data from a file\n";
+	fputs(message, stderr);
+}
+
+/* core help */
+void corehelp()
+{
+	char *message = "Student Order\n"
+	"version 1.3\n"
+	"core commands\n"
+	"quit, q: quit the program\n"
+	"help, h, ?: help message\n"
+	"filehelp, fh: list file commands\n"
+	"studenthelp, sh: list student commands\n"
+	"stophelp, stph: list stop commands\n"
+	"rulehelp, rh: list ordering rule commands";
+	puts(message);
+}
+
+/* file commands */
+void filehelp()
+{
+	char *message = "store, save, s: store data in a file\n"
+	"load, l: load data from a file\n"
+	"clear, reset, new: clear program data";
+	puts(message);
+}
+
+/* student commands */
+void studenthelp()
+{
+	char *message = "addstudent, as: add a student to the data set\n"
+	"editstudent, es: edit student information\n"
+	"removestudent, rs: remove a student from the data set\n"
+	"liststudents, ls: display a list of students\n"
+	"checkstudent, cs: find a student to verify information\n"
+	"gradecounts, gc: display the number of students in each grade";
+	puts(message);
+}
+
+/* stop commands */
+void stophelp()
+{
+	char *message =
+	"insertstop, istp: increment later stop numbers to insert a new stop\n"
+	"removestop, rstp: decrement later stop numbers to remove a stop";
+	puts(message);
+}
+
+/* rule commands */
+void rulehelp()
+{
+	char *message = "ampm: set morning or afternoon stop ordering\n"
+	"gradeprecedence, ap: precedence of grade order in seating arrangement\n"
+	"genderprecedence, gp: precedence of gender in seating assignment\n"
+	"stopprecedence, sp: precedence of stop order in seating arrangement\n"
+	"viewruleorder, vro: display student ordering rule configuraton\n"
+	"vieworder, vo: output ordered student list";
+	puts(message);
+}
+
