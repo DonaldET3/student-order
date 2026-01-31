@@ -1,5 +1,5 @@
 /* I/O and string library
- * written and developed by Donald_ET3 during August and September of 2025
+ * written and developed by DonaldET3 during August and September of 2025
  */
 
 /* uses fatal error library */

@@ -1,5 +1,5 @@
 /* fatal error library
- * written and developed by Donald_ET3 2018-2025
+ * written and developed by DonaldET3 2018-2025
  */
 
 #include <errno.h>

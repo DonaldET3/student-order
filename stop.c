@@ -1,5 +1,5 @@
 /* stop functions
- * written by Donald_ET3 during September 2025
+ * written by DonaldET3 during September 2025
  */
 
 /* increment later stop numbers to insert a new stop */

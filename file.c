@@ -1,5 +1,5 @@
 /* file functions
- * written and developed by Donald_ET3 during August and September of 2025
+ * written and developed by DonaldET3 during August and September of 2025
  */
 
 /* clear program data */

@@ -1,5 +1,6 @@
 /* rule functions
- * written and developed by Donald_ET3 during August and September 2025
+ * written and developed by DonaldET3 during August and September 2025
+ * developed by DonaldET3 during January 2026
  */
 
 /* set morning or afternoon stop ordering */
@@ -97,7 +98,7 @@ void viewruleorder(enum rule_t *rules, struct input_struct *is)
 	for(int i = 0; i < 3; ++i)
 		if(rules[i] != NONE)
 		{
-			printf("%d: ", i);
+			printf("%d: ", i + 1);
 			switch(rules[i])
 			{
 				case GRADE: puts("grade"); break;
