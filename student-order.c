@@ -1,6 +1,7 @@
 /* Student Order
- * version 1.3
+ * version 1.4
  * written and developed by DonaldET3 during August and September 2025
+ * developed by DonaldET3 during January 2026
  */
 
 #include <stdio.h>
@@ -76,6 +77,7 @@ struct data {
 	bool am;
 	struct student_t *students;
 	enum rule_t rules[3];
+	char *filename;
 };
 
 /* help messages */
@@ -110,6 +112,8 @@ void data_init(struct data *d)
 	d->rules[0] = GRADE;
 	d->rules[1] = GENDER;
 	d->rules[2] = STOP;
+
+	d->filename = NULL;
 }
 
 void loop(struct data *d)
@@ -138,9 +142,12 @@ void loop(struct data *d)
 		/* file commands */
 		else if((!strcmp(s, "store")) || (!strcmp(s, "save")) ||
 			(!strcmp(s, "s"))) store(d, is);
+		else if((!strcmp(s, "storeas")) || (!strcmp(s, "saveas")) ||
+			(!strcmp(s, "sa"))) storeas(d, is);
 		else if((!strcmp(s, "load")) || (!strcmp(s, "l"))) loadprompt(d, is);
 		else if((!strcmp(s, "clear")) || (!strcmp(s, "reset")) ||
 			(!strcmp(s, "new"))) clearprompt(d, is);
+		else if((!strcmp(s, "currentfile")) || (!strcmp(s, "cf"))) currentfile(d);
 		/* student commands */
 		else if((!strcmp(s, "addstudent")) || (!strcmp(s, "as")))
 			addstudent(&d->students, is);
@@ -180,27 +187,26 @@ void loop(struct data *d)
 int main(int argc, char **argv)
 {
 	int c;
-	char *fn = NULL;
 	extern char *optarg;
 	extern int opterr, optind, optopt;
 	struct data d;
 
 	/* the errno symbol is defined in errno.h */
 	errno = 0;
+	data_init(&d);
 
 	/* parse the command line */
 	while((c = getopt(argc, argv, "hf:")) != -1)
 		switch(c)
 		{
 			case 'h': help(); exit(EXIT_SUCCESS);
-			case 'f': fn = optarg; break;
+			case 'f': d.filename = str_cpy(optarg); break;
 			case '?': exit(EXIT_FAILURE);
 		}
 
-	data_init(&d);
-	if(fn != NULL) load(&d, fn);
+	if(d.filename != NULL) load(&d);
 	loop(&d);
-	clear(&d);
+	full_clear(&d);
 
 	return EXIT_SUCCESS;
 }

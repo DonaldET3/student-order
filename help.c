@@ -1,12 +1,13 @@
 /* help messages
  * written and developed by DonaldET3 during August and September 2025
+ * developed by DonaldET3 during January 2026
  */
 
 /* command line help */
 void help()
 {
 	char *message = "Student Order\n"
-	"version 1.3\n\n"
+	"version 1.4\n\n"
 	"A program for arranging seating assignments on a bus\n"
 	"based on several different factors.\n\n"
 	"options\n"
@@ -19,7 +20,7 @@ void help()
 void corehelp()
 {
 	char *message = "Student Order\n"
-	"version 1.3\n"
+	"version 1.4\n"
 	"core commands\n"
 	"quit, q: quit the program\n"
 	"help, h, ?: help message\n"
@@ -33,9 +34,11 @@ void corehelp()
 /* file commands */
 void filehelp()
 {
-	char *message = "store, save, s: store data in a file\n"
+	char *message = "store, save, s: store data in the current file\n"
+	"storeas, saveas, sa: store data in a different file\n"
 	"load, l: load data from a file\n"
-	"clear, reset, new: clear program data";
+	"clear, reset, new: clear program data\n"
+	"currentfile, cf: display the current file name";
 	puts(message);
 }
 

@@ -1,5 +1,5 @@
 Student Ordering tool
-version 1.3
+version 1.4
 
 A program for ordering students based on several different factors.
 
@@ -20,9 +20,11 @@ stophelp, stph: list stop commands
 rulehelp, rh: list ordering rule commands
 
 file commands
-store, save, s: store data in a file
+store, save, s: store data in the current file
+storeas, saveas, sa: store data in a different file
 load, l: load data from a file
 clear, reset, new: clear program data
+currentfile, cf: display the current file name
 
 student commands
 addstudent, as: add a student to the data set

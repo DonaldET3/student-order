@@ -1,5 +1,6 @@
 /* file functions
  * written and developed by DonaldET3 during August and September of 2025
+ * developed by DonaldET3 during January 2026
  */
 
 /* clear program data */
@@ -18,10 +19,20 @@ void clear(struct data *d)
 	}
 	d->students = NULL;
 
-	/* default the rule order */
+	/* set default rule order */
 	d->rules[0] = GRADE;
 	d->rules[1] = GENDER;
 	d->rules[2] = STOP;
+}
+
+/* clear program data including the current file name */
+void full_clear(struct data *d)
+{
+	clear(d);
+
+	/* clear the filename */
+	free(d->filename);
+	d->filename = NULL;
 }
 
 /* prompt the operator before clearing */
@@ -31,7 +42,7 @@ void clearprompt(struct data *d, struct input_struct *is)
 
 	if(yes_or_other(is))
 	{
-		clear(d);
+		full_clear(d);
 		puts("program data is cleared");
 	}
 	else puts("program data is retained");
@@ -164,12 +175,21 @@ int read_file(struct data *d, struct input_struct *is)
 }
 
 /* load data from a file */
-void load(struct data *d, char *fn)
+void load(struct data *d)
 {
 	struct input_struct *is;
 	FILE *inf;
+	char *fn;
 
-	if((inf = fopen(fn, "r")) == NULL) {printf("cannot open \"%s\"\n", fn); return;}
+	fn = d->filename;
+
+	if((inf = fopen(fn, "r")) == NULL)
+	{
+		printf("cannot open \"%s\"\n", fn);
+		free(fn);
+		d->filename = NULL;
+		return;
+	}
 
 	is = input_init(inf);
 
@@ -197,7 +217,7 @@ void loadprompt(struct data *d, struct input_struct *is)
 	fn = input_line(is);
 
 	if(*fn == '\n') puts("file load canceled");
-	else load(d, fn);
+	else {d->filename = str_set(d->filename, fn); load(d);}
 }
 
 /* write data to a file */
@@ -249,19 +269,21 @@ int write_file(struct data *d, FILE *of)
 	return 0;
 }
 
-/* store data in a file */
-void store(struct data *d, struct input_struct *is)
+/* store data in current file */
+void store_file(struct data *d)
 {
 	char *fn;
 	FILE *of;
 
-	printf("enter file name to save to\n:");
+	fn = d->filename;
 
-	fn = input_line(is);
-
-	if(*fn == '\n') {puts("file write cancelled"); return;}
-
-	if((of = fopen(fn, "w")) == NULL) {printf("cannot open \"%s\"\n", fn); return;}
+	if((of = fopen(fn, "w")) == NULL)
+	{
+		printf("cannot open \"%s\"\n", fn);
+		free(fn);
+		d->filename = NULL;
+		return;
+	}
 
 	switch(write_file(d, of))
 	{
@@ -271,5 +293,35 @@ void store(struct data *d, struct input_struct *is)
 	}
 
 	fclose(of);
+}
+
+/* store data in a different file */
+void storeas(struct data *d, struct input_struct *is)
+{
+	char *fn;
+
+	printf("enter file name to save to\n:");
+
+	fn = input_line(is);
+
+	if(*fn == '\n') {puts("file write cancelled"); return;}
+
+	d->filename = str_set(d->filename, fn);
+
+	store_file(d);
+}
+
+/* prompt in case there is no current file */
+void store(struct data *d, struct input_struct *is)
+{
+	if(d->filename == NULL) storeas(d, is);
+	else store_file(d);
+}
+
+/* display current file name */
+void currentfile(struct data *d)
+{
+	if(d->filename != NULL) printf("current file: \"%s\"\n", d->filename);
+	else puts("no current file name");
 }
 
